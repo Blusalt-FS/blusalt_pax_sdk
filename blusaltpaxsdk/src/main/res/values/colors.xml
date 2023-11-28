@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#00ACC2</color><!--#258DBF-->
+    <color name="colorPrimaryDark">#00ACC2</color><!--#35C031-->
+    <color name="colorAccent">#00ACC2</color>
+
+    <color name="purple_200">#FFFFFF</color>
+    <color name="purple_500">#DBDBDB</color>
+    <color name="purple_700">#DBDBDB</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="dark_gray">#A4A4A4</color>
+    <color name="light_grey">#e3e3e3</color>
+    <color name="overlayColor">#7EFFEDED</color>
+    <color name="spin_color">#E4E1E1</color>
+
+    <color name="black_overlay">#171717</color>
+    <color name="gray">#EEEEEE</color>
+    <color name="primary_text_light">@android:color/primary_text_light</color>
+
+    <color name="led_green">#2AFF00</color>
+    <color name="led_blue">#0000FF</color>
+    <color name="led_red">#FF0000</color>
+    <color name="led_yellow">#FAFB18</color>
+    <color name="secondary_text_light">@android:color/secondary_text_light</color>
+</resources>
