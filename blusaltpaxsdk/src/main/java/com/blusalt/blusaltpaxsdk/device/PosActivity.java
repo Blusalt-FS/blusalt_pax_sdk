@@ -19,7 +19,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -33,7 +32,6 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
@@ -61,12 +59,10 @@ import com.blusalt.blusaltpaxsdk.pax.detectcard.NeptunePollingPresenter;
 import com.blusalt.blusaltpaxsdk.pax.entity.DetectCardResult;
 import com.blusalt.blusaltpaxsdk.pax.entity.EnterPinResult;
 import com.blusalt.blusaltpaxsdk.pax.entity.PaxConfigData;
-import com.blusalt.blusaltpaxsdk.pax.util.CurrencyConverter;
 import com.blusalt.blusaltpaxsdk.processor.LocalData;
 import com.blusalt.blusaltpaxsdk.processor.processor_blusalt.BlusaltTerminalInfoProcessor;
 import com.blusalt.blusaltpaxsdk.processor.processor_blusalt.CardData;
 import com.blusalt.blusaltpaxsdk.processor.processor_blusalt.EmvData;
-import com.blusalt.blusaltpaxsdk.processor.processor_blusalt.KeyDownloadRequest;
 import com.blusalt.blusaltpaxsdk.processor.processor_blusalt.TerminalInfoProcessor;
 import com.blusalt.blusaltpaxsdk.processor.processor_blusalt.TerminalInformation;
 import com.blusalt.blusaltpaxsdk.processor.service.DownloadService;
@@ -86,10 +82,9 @@ import com.blusalt.blusaltpaxsdk.pax.util.TickTimer;
 import com.blusalt.blusaltpaxsdk.pax.util.TimeRecordUtils;
 import com.blusalt.blusaltpaxsdk.utils.TransactionListener;
 import com.blusalt.blusaltpaxsdk.pax.util.Util;
-import com.blusalt.blusaltszztsdk.utils.KSNUtilities;
+import com.blusalt.blusaltpaxsdk.utils.KSNUtilities;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.pax.commonlib.utils.LogUtils;
 import com.pax.commonlib.utils.ToastUtils;
 import com.pax.commonlib.utils.convert.ConvertHelper;
 import com.pax.dal.IPrinter;
@@ -110,7 +105,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
-import pl.droidsonroids.gif.GifImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -277,7 +271,7 @@ public class PosActivity extends BaseActivity implements TransactionListener, De
         try {
 
             EmvTransParam transParam = new EmvTransParam();
-            LogUtils.i(TAG, "transType:" + ConvertHelper.getConvert().bcdToStr(new byte[]{transType}) + ",int val:" + transType);
+            Log.e(TAG, "transType:" + ConvertHelper.getConvert().bcdToStr(new byte[]{transType}) + ",int val:" + transType);
 
             transParam.setTransType(transType);
             transParam.setAmount(Long.toString(totalAmount.longValue()));
@@ -294,7 +288,7 @@ public class PosActivity extends BaseActivity implements TransactionListener, De
 
             transProcessPresenter.preTrans(transParam, isNeedContact);
 //            EmvTransParam transParam = new EmvTransParam();
-//            LogUtils.i(TAG, "transType:" + ConvertHelper.getConvert().bcdToStr(new byte[]{transType}) + ",int val:" + transType);
+//            Log.e(TAG, "transType:" + ConvertHelper.getConvert().bcdToStr(new byte[]{transType}) + ",int val:" + transType);
 //            transParam.setTransType(transType);
 //            transParam.setAmount(Long.toString(transAmt));
 //            transParam.setAmountOther(Long.toString(otherAmt));
@@ -307,7 +301,7 @@ public class PosActivity extends BaseActivity implements TransactionListener, De
 //            transProcessPresenter.preTrans(transParam, isNeedContact);
 
         } catch (IllegalArgumentException e) {
-            LogUtils.e(TAG, e);
+            Log.e(TAG, String.valueOf(e));
         }
     }
 
@@ -443,7 +437,7 @@ public class PosActivity extends BaseActivity implements TransactionListener, De
                         || pinResult == EnterPinResult.RET_PIN_BY_PASS
                         || pinResult == EnterPinResult.RET_OFFLINE_PIN_READY
                         || pinResult == EnterPinResult.RET_NO_KEY) {
-                    LogUtils.d(TAG, "to do nothing");
+                    Log.e(TAG, "to do nothing");
                 } else {
                     displayTransPromptDlg(PROMPT_TYPE_FAILED, pinResult + "");
                 }
@@ -456,7 +450,7 @@ public class PosActivity extends BaseActivity implements TransactionListener, De
 
     @Override
     public void onStartEnterPin(String prompt) {
-        LogUtils.w(TAG, "onStartEnterPin, current thread " + Thread.currentThread().getName() + ", id:" + Thread.currentThread().getId());
+        Log.e(TAG, "onStartEnterPin, current thread " + Thread.currentThread().getName() + ", id:" + Thread.currentThread().getId());
         MyApplication.getINSTANCE().runOnUiThread(() -> displayEnterPinDlg(prompt));
     }
 
@@ -467,7 +461,7 @@ public class PosActivity extends BaseActivity implements TransactionListener, De
         currTransResultEnum = transResult.getTransResult();
         currentTxnCVMResult = transResult.getCvmResult();
         currTransResultCode = transResult.getResultCode();
-        LogUtils.d(TAG, "onTransFinish,retCode:" + currTransResultCode + ", transResult:" + currTransResultEnum + ", cvm result:" + transResult.getCvmResult());
+        Log.e(TAG, "onTransFinish,retCode:" + currTransResultCode + ", transResult:" + currTransResultEnum + ", cvm result:" + transResult.getCvmResult());
         getFirstGACTag();
         if (transResult.getResultCode() == RetCode.EMV_OK) {
             //Check CVM in order to proceed   (5S - 1) S  Stands for Success
@@ -484,7 +478,7 @@ public class PosActivity extends BaseActivity implements TransactionListener, De
     public void onCompleteTrans(TransResult transResult) {
         currTransResultEnum = transResult.getTransResult();
         currTransResultCode = transResult.getResultCode();
-        LogUtils.d(TAG, "onCompleteTrans,retCode:" + transResult.getResultCode() + ", transResult:" + currTransResultEnum);
+        Log.e(TAG, "onCompleteTrans,retCode:" + transResult.getResultCode() + ", transResult:" + currTransResultEnum);
         if (transResult.getResultCode() == RetCode.EMV_OK) {
             //1.to Trans result page
         }
@@ -505,7 +499,7 @@ public class PosActivity extends BaseActivity implements TransactionListener, De
     @Override
     public void onReadCardOK() {
         //Just light used here
-        LogUtils.e("Card Status: ", "Read Okay");
+        Log.e("Card Status: ", "Read Okay");
         Log.e("TAG", "Card Confirmed");
 
     }
@@ -540,7 +534,7 @@ public class PosActivity extends BaseActivity implements TransactionListener, De
                 }
             }
         });
-        LogUtils.d(TAG, "is Act Finish?" + isFinishing());
+        Log.e(TAG, "is Act Finish?" + isFinishing());
 
         if (!PosActivity.this.isFinishing()) {
             transPromptDlg.show();
@@ -597,7 +591,7 @@ public class PosActivity extends BaseActivity implements TransactionListener, De
 
 
     private void checkTransResult() {
-        LogUtils.w(TAG, "checkTransResult:" + currTransResultEnum);
+        Log.e(TAG, "checkTransResult:" + currTransResultEnum);
         if (currTransResultEnum == TransResultEnum.RESULT_REQ_ONLINE) {
             // 1.online process 2.to result page
             onlineProcess();
@@ -619,7 +613,7 @@ public class PosActivity extends BaseActivity implements TransactionListener, De
             //Our Implementation
             Log.e("TAG", "Failed to Read Card Please try Again");
         } else {
-            LogUtils.e(TAG, "unexpected result," + currTransResultEnum);
+            Log.e(TAG, "unexpected result," + currTransResultEnum);
 
             Log.e("TAG", "unexpected result");
 

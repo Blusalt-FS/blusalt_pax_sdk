@@ -8,7 +8,6 @@ import android.util.Log;
 import com.blusalt.blusaltpaxsdk.MyApplication;
 import com.blusalt.blusaltpaxsdk.pax.manager.AppDataManager;
 import com.blusalt.blusaltpaxsdk.utils.PedApiUtils;
-import com.pax.commonlib.utils.LogUtils;
 import com.pax.commonlib.utils.convert.ConvertHelper;
 import com.pax.commonlib.utils.convert.IConvert;
 import com.pax.dal.exceptions.PedDevException;
@@ -85,7 +84,7 @@ public class Util {
 
             ret = ClssProcess.getInstance().getTlv(tag, byteArray);
         }
-//        LogUtils.d(TAG, "getTagVal, ret:" + ret + ", T:" + decimalToHex(tag) + ",L:" + byteArray.length + ", V:" + ConvertHelper.getConvert().bcdToStr(byteArray.data));
+//        Log.d(TAG, "getTagVal, ret:" + ret + ", T:" + decimalToHex(tag) + ",L:" + byteArray.length + ", V:" + ConvertHelper.getConvert().bcdToStr(byteArray.data));
         if (tag == 0x9F03) {
             byteArray.length = 6;
         } else if (tag == 0x9C) {
@@ -116,7 +115,7 @@ public class Util {
         String taaag = convert.bcdToStr(convert.intToByteArray(tag, IConvert.EEndian.BIG_ENDIAN));
 
 
-        LogUtils.e("Util   getTagVal",  " currentTxnType "  + currentTxnType +" tag " + taaag + "  val:" + ConvertHelper.getConvert().bcdToStr(tempArr));
+        Log.e("Util   getTagVal",  " currentTxnType "  + currentTxnType +" tag " + taaag + "  val:" + ConvertHelper.getConvert().bcdToStr(tempArr));
 
 //        return (tag == 0x9F1A) ?"0566" :ConvertHelper.getConvert().bcdToStr(tempArr); //Hack
         return ConvertHelper.getConvert().bcdToStr(tempArr);
@@ -192,16 +191,16 @@ public class Util {
         ArrayList<String> keyList = new ArrayList<>();
         ArrayList<String> valueList = new ArrayList<>();
 
-        LogUtils.e("Util  Where ",  " TXN_TYPE_ICC "  + TXN_TYPE_ICC +" TXN_TYPE_PICC " + TXN_TYPE_PICC );
+        Log.e("Util  Where ",  " TXN_TYPE_ICC "  + TXN_TYPE_ICC +" TXN_TYPE_PICC " + TXN_TYPE_PICC );
 
 
         for (int i = 0; i < EMV_TAG.length; i++) {
             tag = EMV_TAG[i];
             String val = getTagVal(tag,currentTxnType,transactionType);
 //            String key = TAG_TITLE[i] + "(" + Integer.toHexString(tag).toUpperCase() + ")";
-//            LogUtils.w(TAG, "key:" + key + ", val:" + val);
+//            Log.w(TAG, "key:" + key + ", val:" + val);
             String taaag = convert.bcdToStr(convert.intToByteArray(tag, IConvert.EEndian.BIG_ENDIAN));
-            LogUtils.e("Util",  " currentTxnType "  + currentTxnType +" tag " + taaag + "  val:" + val);
+            Log.e("Util",  " currentTxnType "  + currentTxnType +" tag " + taaag + "  val:" + val);
             iccDataConcatenated += ConcatLenght2Str(taaag, val);
 
         }
@@ -217,16 +216,16 @@ public class Util {
         ArrayList<String> keyList = new ArrayList<>();
         ArrayList<String> valueList = new ArrayList<>();
 
-        LogUtils.e("Util  Where ",  " TXN_TYPE_ICC "  + TXN_TYPE_ICC +" TXN_TYPE_PICC " + TXN_TYPE_PICC );
+        Log.e("Util  Where ",  " TXN_TYPE_ICC "  + TXN_TYPE_ICC +" TXN_TYPE_PICC " + TXN_TYPE_PICC );
 
 
         for (int emvTagContactless : EMV_TAG_CONTACTLESS) {
             tag = emvTagContactless;
             String val = getTagVal(tag, currentTxnType, transactionType);
 //            String key = TAG_TITLE[i] + "(" + Integer.toHexString(tag).toUpperCase() + ")";
-//            LogUtils.w(TAG, "key:" + key + ", val:" + val);
+//            Log.w(TAG, "key:" + key + ", val:" + val);
             String taaag = convert.bcdToStr(convert.intToByteArray(tag, IConvert.EEndian.BIG_ENDIAN));
-            LogUtils.e("Util",  " currentTxnType Contactless  "  + currentTxnType +" tag " + taaag + "  val:" + val);
+            Log.e("Util",  " currentTxnType Contactless  "  + currentTxnType +" tag " + taaag + "  val:" + val);
             iccDataConcatenated += ConcatLenght2Str(taaag, val);
         }
 

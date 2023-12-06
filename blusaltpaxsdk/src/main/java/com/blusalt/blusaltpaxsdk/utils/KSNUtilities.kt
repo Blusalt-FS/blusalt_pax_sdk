@@ -1,4 +1,4 @@
-package com.blusalt.blusaltszztsdk.utils
+package com.blusalt.blusaltpaxsdk.utils
 
 import androidx.annotation.Keep
 import java.io.ByteArrayOutputStream

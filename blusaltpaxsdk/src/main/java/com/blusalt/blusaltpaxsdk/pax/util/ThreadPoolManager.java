@@ -16,7 +16,7 @@
 
 package com.blusalt.blusaltpaxsdk.pax.util;
 
-import com.pax.commonlib.utils.LogUtils;
+import android.util.Log;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.SynchronousQueue;
@@ -31,7 +31,7 @@ public class ThreadPoolManager {
     private ThreadPoolManager() {
         int corePoolSize = Runtime.getRuntime().availableProcessors();
 //        int corePoolSize = Runtime.getRuntime().availableProcessors()*2+1;
-        LogUtils.i(TAG, "corePoolSize:" + corePoolSize);
+        Log.i(TAG, "corePoolSize:" + corePoolSize);
         executor = new ThreadPoolExecutor(
                 corePoolSize,
                 Integer.MAX_VALUE,

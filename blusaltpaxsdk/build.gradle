@@ -87,6 +87,10 @@ dependencies {
     implementation project(path: ':sdk')
     implementation project(path: ':emv')
 
+//    implementation files('libs/commonlib-release.aar')
+//    implementation files('libs/emv-release.aar')
+//    implementation files('libs/sdk-release.aar')
+
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
 //    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
 

@@ -3,13 +3,13 @@ package com.blusalt.blusaltpaxsdk;
 import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
+import android.util.Log;
 
 import androidx.annotation.Keep;
 
 import com.blusalt.blusaltpaxsdk.pax.AppActLifecycleCallback;
 import com.blusalt.blusaltpaxsdk.pax.manager.ParamManager;
 import com.blusalt.blusaltpaxsdk.pax.util.ThreadPoolManager;
-import com.pax.commonlib.utils.LogUtils;
 import com.pax.dal.IDAL;
 import com.paxsz.module.emv.process.EmvBase;
 import com.paxsz.module.pos.Sdk;
@@ -66,11 +66,11 @@ public class MyApplication extends Application {
         runInBackground(new Runnable() {
             @Override
             public void run() {
-                LogUtils.d(TAG, " initSdkModule start");
+                Log.d(TAG, " initSdkModule start");
                 long startT = System.currentTimeMillis();
                 getDalInstance();
                 long endT = System.currentTimeMillis();
-                LogUtils.d(TAG, "initSdkModule  end:" + (endT - startT));
+                Log.d(TAG, "initSdkModule  end:" + (endT - startT));
             }
         });
 
@@ -85,11 +85,11 @@ public class MyApplication extends Application {
         runInBackground(new Runnable() {
             @Override
             public void run() {
-                LogUtils.d(TAG, " initEmvModule start");
+                Log.d(TAG, " initEmvModule start");
                 long startT = System.currentTimeMillis();
                 mParamManager = ParamManager.getInstance(INSTANCE);
                 long endT = System.currentTimeMillis();
-                LogUtils.d(TAG, "initEmvModule  end:" + (endT - startT));
+                Log.d(TAG, "initEmvModule  end:" + (endT - startT));
                 EmvBase.loadLibrary();
             }
         });
